@@ -1662,12 +1662,41 @@ CIRGenFunction::emitX86BuiltinExpr(unsigned builtinID, const CallExpr *expr) {
   case X86::BI__builtin_ia32_cmpnltsd:
   case X86::BI__builtin_ia32_cmpnlesd:
   case X86::BI__builtin_ia32_cmpordsd:
-  case X86::BI__builtin_ia32_vcvtph2ps_mask:
-  case X86::BI__builtin_ia32_vcvtph2ps256_mask:
-  case X86::BI__builtin_ia32_vcvtph2ps512_mask:
-  case X86::BI__builtin_ia32_cvtneps2bf16_128_mask:
-  case X86::BI__builtin_ia32_cvtneps2bf16_256_mask:
-  case X86::BI__builtin_ia32_cvtneps2bf16_512_mask:
+    cgm.errorNYI(expr->getSourceRange(),
+                 std::string("unimplemented X86 builtin call: ") +
+                     getContext().BuiltinInfo.getName(builtinID));
+    return {};
+  case X86::BI__builtin_ia32_vcvtph2ps_mask: {
+    mlir::Location loc = getLoc(expr->getExprLoc());
+    return emitIntrinsicCallOp(builder, loc, "x86.avx512.mask.vcvtph2ps.128",
+                               convertType(expr->getType()), ops);
+  }
+  case X86::BI__builtin_ia32_vcvtph2ps256_mask: {
+    mlir::Location loc = getLoc(expr->getExprLoc());
+    return emitIntrinsicCallOp(builder, loc, "x86.avx512.mask.vcvtph2ps.256",
+                               convertType(expr->getType()), ops);
+  }
+  case X86::BI__builtin_ia32_vcvtph2ps512_mask: {
+    mlir::Location loc = getLoc(expr->getExprLoc());
+    return emitIntrinsicCallOp(builder, loc, "x86.avx512.mask.vcvtph2ps.512",
+                               convertType(expr->getType()), ops);
+  }
+  case X86::BI__builtin_ia32_cvtneps2bf16_128_mask: {
+    mlir::Location loc = getLoc(expr->getExprLoc());
+    return emitIntrinsicCallOp(builder, loc,
+                               "x86.avx512bf16.mask.cvtneps2bf16.128",
+                               convertType(expr->getType()), ops);
+  }
+  case X86::BI__builtin_ia32_cvtneps2bf16_256_mask: {
+    mlir::Location loc = getLoc(expr->getExprLoc());
+    return emitIntrinsicCallOp(builder, loc, "x86.avx512bf16.cvtneps2bf16.256",
+                               convertType(expr->getType()), ops);
+  }
+  case X86::BI__builtin_ia32_cvtneps2bf16_512_mask: {
+    mlir::Location loc = getLoc(expr->getExprLoc());
+    return emitIntrinsicCallOp(builder, loc, "x86.avx512bf16.cvtneps2bf16.512",
+                               convertType(expr->getType()), ops);
+  }
   case X86::BI__cpuid:
   case X86::BI__cpuidex:
   case X86::BI__emul:
