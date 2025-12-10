@@ -18,8 +18,8 @@ typedef __bf16 __m256bh __attribute__((__vector_size__(32), __aligned__(32)));
 typedef __bf16 __m128bh __attribute__((__vector_size__(16), __aligned__(16)));
 
 // Test __builtin_ia32_vcvtph2ps512_mask
-__m512 test_vcvtph2ps512_mask(__m256i a, __m512 src, __mmask16 k, __m512 passthru) {
-  return __builtin_ia32_vcvtph2ps512_mask(a, src, k, passthru);
+__m512 test_vcvtph2ps512_mask(__m256i a, __m512 src, __mmask16 k) {
+  return __builtin_ia32_vcvtph2ps512_mask(a, src, k);
 }
 // CIR-LABEL: cir.func {{.*}}@test_vcvtph2ps512_mask
 // CIR: cir.call @llvm.x86.avx512.mask.vcvtph2ps.512
@@ -29,8 +29,8 @@ __m512 test_vcvtph2ps512_mask(__m256i a, __m512 src, __mmask16 k, __m512 passthr
 // OGCG: call <16 x float> @llvm.x86.avx512.mask.vcvtph2ps.512
 
 // Test __builtin_ia32_vcvtph2ps256_mask
-__m256 test_vcvtph2ps256_mask(__m128i a, __m256 src, __mmask8 k, __m256 passthru) {
-  return __builtin_ia32_vcvtph2ps256_mask(a, src, k, passthru);
+__m256 test_vcvtph2ps256_mask(__m128i a, __m256 src, __mmask8 k) {
+  return __builtin_ia32_vcvtph2ps256_mask(a, src, k);
 }
 // CIR-LABEL: cir.func {{.*}}@test_vcvtph2ps256_mask
 // CIR: cir.call @llvm.x86.avx512.mask.vcvtph2ps.256
