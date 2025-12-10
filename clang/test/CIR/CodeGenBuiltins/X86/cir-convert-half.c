@@ -40,8 +40,8 @@ __m256 test_vcvtph2ps256_mask(__m128i a, __m256 src, __mmask8 k, __m256 passthru
 // OGCG: call <8 x float> @llvm.x86.avx512.mask.vcvtph2ps.256
 
 // Test __builtin_ia32_vcvtph2ps_mask
-__m128 test_vcvtph2ps_mask(__m128i a, __m128 src, __mmask8 k, __m128 passthru) {
-  return __builtin_ia32_vcvtph2ps_mask(a, src, k, passthru);
+__m128 test_vcvtph2ps_mask(__m128i a, __m128 src, __mmask8 k) {
+  return __builtin_ia32_vcvtph2ps_mask(a, src, k);
 }
 // CIR-LABEL: cir.func {{.*}}@test_vcvtph2ps_mask
 // CIR: cir.call @llvm.x86.avx512.mask.vcvtph2ps.128
@@ -51,8 +51,8 @@ __m128 test_vcvtph2ps_mask(__m128i a, __m128 src, __mmask8 k, __m128 passthru) {
 // OGCG: call <4 x float> @llvm.x86.avx512.mask.vcvtph2ps.128
 
 // Test __builtin_ia32_cvtneps2bf16_512_mask
-__m256bh test_cvtneps2bf16_512_mask(__m512 a, __m256bh w, __mmask16 u, __m256bh passthru) {
-  return __builtin_ia32_cvtneps2bf16_512_mask(a, w, u, passthru);
+__m256bh test_cvtneps2bf16_512_mask(__m512 a, __m256bh w, __mmask16 u) {
+  return __builtin_ia32_cvtneps2bf16_512_mask(a, w, u);
 }
 // CIR-LABEL: cir.func {{.*}}@test_cvtneps2bf16_512_mask
 // CIR: cir.call @llvm.x86.avx512bf16.cvtneps2bf16.512
@@ -62,8 +62,8 @@ __m256bh test_cvtneps2bf16_512_mask(__m512 a, __m256bh w, __mmask16 u, __m256bh 
 // OGCG: call <32 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512
 
 // Test __builtin_ia32_cvtneps2bf16_256_mask
-__m128bh test_cvtneps2bf16_256_mask(__m256 a, __m128bh w, __mmask8 u, __m128bh passthru) {
-  return __builtin_ia32_cvtneps2bf16_256_mask(a, w, u, passthru);
+__m128bh test_cvtneps2bf16_256_mask(__m256 a, __m128bh w, __mmask8 u) {
+  return __builtin_ia32_cvtneps2bf16_256_mask(a, w, u);
 }
 // CIR-LABEL: cir.func {{.*}}@test_cvtneps2bf16_256_mask
 // CIR: cir.call @llvm.x86.avx512bf16.cvtneps2bf16.256
@@ -73,8 +73,8 @@ __m128bh test_cvtneps2bf16_256_mask(__m256 a, __m128bh w, __mmask8 u, __m128bh p
 // OGCG: call <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.256
 
 // Test __builtin_ia32_cvtneps2bf16_128_mask
-__m128bh test_cvtneps2bf16_128_mask(__m128 a, __m128bh w, __mmask8 u, __m128bh passthru) {
-  return __builtin_ia32_cvtneps2bf16_128_mask(a, w, u, passthru);
+__m128bh test_cvtneps2bf16_128_mask(__m128 a, __m128bh w, __mmask8 u) {
+  return __builtin_ia32_cvtneps2bf16_128_mask(a, w, u);
 }
 // CIR-LABEL: cir.func {{.*}}@test_cvtneps2bf16_128_mask
 // CIR: cir.call @llvm.x86.avx512bf16.mask.cvtneps2bf16.128
