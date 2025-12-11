@@ -18,8 +18,8 @@ typedef __bf16 __m256bh __attribute__((__vector_size__(32), __aligned__(32)));
 typedef __bf16 __m128bh __attribute__((__vector_size__(16), __aligned__(16)));
 
 // Test __builtin_ia32_vcvtph2ps512_mask
-__m512 test_vcvtph2ps512_mask(__m256i a, __m512 src, __mmask16 k) {
-  return __builtin_ia32_vcvtph2ps512_mask(a, src, k);
+__m512 test_vcvtph2ps512_mask(__m256i a, __m512 src, __mmask16 k, _m512 dst) {
+  return __builtin_ia32_vcvtph2ps512_mask(a, src, k, dst);
 }
 // CIR-LABEL: cir.func {{.*}}@test_vcvtph2ps512_mask
 // CIR: cir.call @llvm.x86.avx512.mask.vcvtph2ps.512
