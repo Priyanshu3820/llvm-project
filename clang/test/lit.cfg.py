@@ -81,6 +81,8 @@ llvm_config.use_default_substitutions()
 
 llvm_config.use_clang()
 
+config.substitutions.append(('%clang_cir', os.path.join(config.clang_tools_dir, 'clang')))
+
 config.substitutions.append(("%src_dir", config.clang_src_dir))
 
 config.substitutions.append(("%src_include_dir", config.clang_src_dir + "/include"))
