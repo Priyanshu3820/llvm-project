@@ -21,6 +21,7 @@
 #include "clang/CIR/Dialect/IR/CIRTypes.h"
 #include "clang/CIR/MissingFeatures.h"
 #include "llvm/Support/ErrorHandling.h"
+#include "llvm/Support/Casting.h"
 
 using namespace clang;
 using namespace clang::CIRGen;
@@ -370,12 +371,12 @@ emitCIRX86CvtF16ToFloatExpr(CIRGenBuilderTy &builder, mlir::Location loc,
   auto passthru = ops[1];
   auto mask = ops[2];
 
-  auto vecType = src.getType().cast<mlir::VectorType>();
-  auto numElts = vecType.getSize();
+  auto vecType = llvm::cast<mlir::VectorType>(src.getType());
+  auto numElts = vecType.getNumElements();
   auto halfTy = mlir::VectorType::get({numElts}, builder.getF16Type());
   auto srcF16 = builder.createBitcast(loc, src, halfTy);
 
-  auto res = builder.createFPExt(loc, srcF16, dstTy);
+  auto res = builder.createFPExtOp(loc, dstTy, srcF16);
 
   return emitX86Select(builder, loc, mask, res, passthru);
 }
@@ -1694,13 +1695,16 @@ CIRGenFunction::emitX86BuiltinExpr(unsigned builtinID, const CallExpr *expr) {
     llvm::StringRef intrinsicName;
     switch (builtinID) {
     case X86::BI__builtin_ia32_vcvtph2ps_mask: {
-      return emitCIRX86CvtF16ToFloatExpr(builder, loc, convertType(expr->getType()), ops);
+      return emitCIRX86CvtF16ToFloatExpr(builder, loc,
+                                         convertType(expr->getType()), ops);
     }
     case X86::BI__builtin_ia32_vcvtph2ps256_mask: {
-      return emitCIRX86CvtF16ToFloatExpr(builder, loc, convertType(expr->getType()), ops);
+      return emitCIRX86CvtF16ToFloatExpr(builder, loc,
+                                         convertType(expr->getType()), ops);
     }
     case X86::BI__builtin_ia32_vcvtph2ps512_mask: {
-      return emitCIRX86CvtF16ToFloatExpr(builder, loc, convertType(expr->getType()), ops);
+      return emitCIRX86CvtF16ToFloatExpr(builder, loc,
+                                         convertType(expr->getType()), ops);
     }
     case X86::BI__builtin_ia32_cvtneps2bf16_128_mask:
       intrinsicName = "x86.avx512bf16.mask.cvtneps2bf16.128";
